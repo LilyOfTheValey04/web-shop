@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html>	
+<head>
+   
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" href="style.css"/>
+	 <title>Celestial jewelry</title>	
+     <link rel="icon" href="images/icon.png" type="image/png">	
+     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+</head>
+<body>
+
+<!-- Navigation Bar -->
+<!-- Вместо да слагаш логото вътре в .topnav, го поставяш преди нея -->
+<!-- Общ контейнер за логото и навигацията -->
+<div class="header-container">
+  
+    <!-- Лого (линк към началната страница) -->
+    <a href="index.html" class="logo-link">
+      <img src="images/logo3.png" alt="logo" class="logo">
+    </a>
+  
+    <!-- Навигационно меню -->
+    <div class="topnav">
+      <a href="index.html">Home</a>
+      <a class="active" href="#">About us</a>
+      <a href="#products">Products</a>
+      <a href="#contact">Contacts</a>
+      
+      <!-- Иконка на количката -->
+      <div class="card-container">
+        <a href="buyForm.html">
+          <img src="images/bag2.png" alt="Shopping Cart" class="cart-icon">
+          <span id="cart-count">0</span>
+        </a>
+      </div>
+    </div>
+  </div>
+  
+
+
+ <!--PRODUCT5-->
+ <!-- Product Details Section -->
+
+<section class="product-details">
+    <div class="product-image">
+     <img src="images/product5.jpg" alt="Neckless 'love forever'">
+	</div>
+	<div class="product-info">
+     <h1>Neckless "love forever"</h1>
+      <p class="short-description">Gold jewelry with synthetic garnet</p>
+      <h3>Description</h3>
+      <p class="full-description">Celebrate eternal love and elegance with this Infinity Heart Pendant Necklace, crafted from luxurious white gold. The design features a delicate heart intertwined with an infinity symbol, representing unbreakable bonds and timeless beauty. Suspended on a sleek chain, this pendant is the perfect gift for a loved one or a meaningful addition to your jewelry collection.</p>
+      <p class="price"><strong>Price:</strong> $259.40</p>
+	 
+	<!-- Purchase Form -->
+<form class="purchase-form">
+   <label for="quantity" >Quantity:</label>
+   <input type="number" id="quantity" name="quantity" value="1" min="1" required>
+   <button type="button" class="buy-button">Buy now</button>
+</form>
+<div>
+	 </section>
+
+<!-- Reviews Section -->
+<section class="reviews">
+    <h2>Customer Reviews</h2>
+    <div class="review">
+        <p><strong>John Doe:</strong> Amazing quality and fast delivery. Perfect gift!</p>
+    </div>
+    <div class="review">
+        <p><strong>Jane Smith:</strong> Really elegant earrings. Loved the design!</p>
+    </div>
+
+    <!-- Containing new reviews -->
+    <div id="reviews">
+        <h3>Reviews:</h3>
+    </div>
+
+    <!-- Review Submission Form -->
+    <form class="review-form" id="reviewForm">
+        <h3>Submit Your Review</h3>
+        <label for="review-name">Name:</label>
+        <input type="text" id="review-name" name="name" required>
+        <label for="review-text">Review:</label>
+        <textarea id="review-text" name="review" rows="4" required></textarea>
+        <button type="submit" class="submit-review-button">Submit Review</button>
+    </form>
+</section>
+
+<script src="script.js" ></script>
+</body>
+</html>
+
+</body>
+</html>

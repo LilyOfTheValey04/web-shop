@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>	
+<head>
+   
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" href="style.css"/>
+	 <title>jeweryShop</title>	
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+</head>
+<body>
+
+<!-- Navigation Bar -->
+<div class="topnav">
+    <a href="index.html">Home</a>
+    <a class="active" href="#">About us</a>
+    <a href="#products">Products</a>
+    <a href="#contact">Contacts</a>
+	
+</div>
+
+ <!-- Product Details Section -->
+
+<section class="product-details">
+    <div class="product-image">
+     <img src="images/product1.jpg" alt="Earings 'Teardrop'">
+	</div>
+	<div class="product-info">
+     <h1>Earings "Teardrop"</h1>
+      <p class="short-description">Stylish golden earings</p>
+      <h3>Description</h3>
+      <p class="full-description">Elegant and stylish earrings made of 14K gold. Perfect for special occasions or daily wear.</p>
+      <p class="price"><strong>Price:</strong> $75.99</p>
+	 
+	 <!-- Purchase Form -->
+	 <form class="purchase-form" action="buy_product1.html" method="POST">
+	   <label for="quantity">Quantity</ladel>
+	   <input type="number" id="quantity" name="quantity" value="1" min="1" required>
+	    <a class="buy-button" href="buyForm.html">Buy now </a>
+	  
+	  
+	 </form>
+</div>
+</section>
+
+<!-- Reviews Section -->
+	<section class="reviews">
+        <h2>Customer Reviews</h2>
+        <div class="review">
+            <p><strong>John Doe:</strong> Amazing quality and fast delivery. Perfect gift!</p>
+        </div>
+        <div class="review">
+            <p><strong>Jane Smith:</strong> Really elegant earrings. Loved the design!</p>
+        </div>
+
+        <!-- Review Submission Form -->
+        <form class="review-form" action="submit_review_product1.html" method="POST">
+            <h3>Submit Your Review</h3>
+            <label for="review-name">Name:</label>
+            <input type="text" id="review-name" name="name" required>
+            <label for="review-text">Review:</label>
+            <textarea id="review-text" name="review" rows="4" required></textarea>
+            <button type="submit" class="submit-review-button">Submit Review</button>
+        </form>
+    </section>
+</body>
+</html>

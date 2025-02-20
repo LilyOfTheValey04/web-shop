@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>	
+<head>
+   
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" href="style.css"/>
+	 <title>jeweryShop</title>	
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+</head>
+<body>
+<!-- Прозрачен фон за модала -->
+<div class="overlay" id="overlay" onclick="hideOrderForm()"></div>
+<!--Complete Order Form-->
+<form class="complete-order-form" id="orderForm" action="" method="POST">
+<a class="return-home-page" href="index.html">Home page</a>
+
+<h1>Complete order</h1>
+<h2>Personal Data</h2>
+
+<label for="complete-order-name">Name</label>
+<input type="text"  id="complete-order-name" name="name" required>
+
+<label for="complete-order-surname">Surname</label>
+<input type="text"  id="complete-order-surname" name="surname" required>
+
+<label for="complete-order-address">Address</label>
+<input type="text" id="complete-order-address" name="address" required>
+
+<!--Button send -->
+<div class="button-container">
+ <button type="submit" class="order-button">Submit</button>
+ <button type="button" class="order-button" id="cancel-order">Cancel</button>
+</div>
+
+</form>
+
+
+
+
+
+
+<script src="script.js" defer></script>
+
+
+</body>
+</html>
