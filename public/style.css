@@ -6,7 +6,9 @@ body{
 	padding:0;
 	box-sizing:border-box;
 	height: 100vh; 
+
 }
+
 
 /* Общ контейнер: черен фон, хоризонтално подреждане с flex */
 .header-container {
@@ -42,7 +44,7 @@ body{
   /* Менюто (.topnav) */
   .topnav {
 	display: flex;                  /* Подрежда линковете хоризонтално */
-	gap: 220px;                      /* Разстояние между елементите */
+	gap: 150px;                      /* Разстояние между елементите */
 	align-items: center;            /* Вертикално центриране */
 	margin-left: auto;              /* Избутва менюто вдясно (ако искаш логото да е вляво) */
   }
@@ -67,7 +69,7 @@ body{
 	position: relative;
 	display: flex;
 	align-items: center;
-	margin-right: 5px;
+	margin-right: 70px;
   }
   
   /* Иконка на количката */
@@ -152,7 +154,7 @@ body{
 	
 }
 
-.Products h2{
+.products h2{
 	font-size: 2rem;
 	margin-bottom: 2px;	
 }
@@ -173,7 +175,7 @@ body{
 	box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
-.Product:hover{
+.product:hover{
 	  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
@@ -319,14 +321,6 @@ body{
 
 
 .review-form input, .review-form textarea{
-	width:50%;
-	padding: 10px;
-	border: 1px solid #ddd;
-	border-radius: 20px;
-	background-color:#FFCFCF; 
-}
-
-.review-form input, .review-form textarea{
 	width:100%;
 	padding: 10px;
 	border: 1px solid #ddd;
@@ -351,7 +345,7 @@ body{
 /*Complete order Form*/
 
 /* Общи стилове за двете форми */
-.complete-order-form, .register-form {
+.complete-order-form, .register-form, .login-form,.admin-form {
 	width: 550px;
 	position: fixed;
 	top: 50%;
@@ -367,25 +361,84 @@ body{
 	gap: 10px;
 }
 
+
+
+/*.admin-container {
+	display: flex;
+	flex-direction: column;
+	align-items: flex-start; 
+	width: 40%;
+	height: 80%;
+	max-width: 1000px;
+	margin: 50px auto;
+	background: white;
+	padding: 30px;
+	box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+	border-radius: 12px;
+	display: flex;
+	flex-direction: column;
+	gap: 15px;
+}*/
+
+/*.admin-form textarea {
+    box-sizing: border-box; 
+    width: 80%;
+    height:50px;
+    padding: 10px;
+    margin-bottom: 10px;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    background-color: #FFCFCF;
+}*/
+
+.admin-form textarea {
+	width: 80%;
+	height: 200px; /* или колкото ти е удобно */
+	resize: vertical; /* позволява потребителят да го разширява при нужда */
+	padding: 10px;
+	border: 1px solid #ddd;
+	border-radius: 10px;
+	background-color: #FFCFCF;
+	overflow-y: auto; /* скрол вътре, само ако текстът е твърде много */
+  }
+  
+
 /* Стилове за етикетите на двете форми */
-.complete-order-form label, .register-form label {
+.complete-order-form, .register-form,.admin-form,  .login-form
+{
+    opacity: 0;
+    animation: fadeIn 0.5s ease-in-out forwards;
+}
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+.complete-order-form label, .register-form label, .login-form label, .admin-form label {
 	align-self: flex-start;
 	margin-left: 10%;
 }
 
+
+
 /* Стилове за input полетата на двете форми */
-.complete-order-form input, .register-form input {
+.complete-order-form input, .register-form input, .login-form input, .admin-form input {
 	width: 80%;
 	padding: 2%;
-	margin: 5%;
+	margin: 1%;
 	margin-right: 5%;
 	border: 1px solid #ddd;
 	border-radius: 20px;
 	background-color: #FFCFCF;
 }
 
+
+
 /* Стилове за бутоните */
-.button-container {
+.button-register {
 	display: flex;
 	flex-direction: row;
 	justify-content: center;
@@ -394,7 +447,7 @@ body{
 	margin-top: 10px;
 }
 
-.order-button {
+.order-button{
 	width: 150px;
 	padding: 10px 20px;
 	background-color: #cc005f;
@@ -423,6 +476,21 @@ body{
             height: 100%;
             background: rgba(0, 0, 0, 0.5);
         }
+
+		.login-button {
+			width: 150px;
+			padding: 10px;
+			background-color: #cc005f;
+			color: white;
+			border: none;
+			border-radius: 20px;
+			cursor: pointer;
+			text-align: center;
+		}
+		
+		.login-button:hover {
+			background-color: #db5a96;
+		}
 /* Footer стилове */
 footer {
     background-color: #171717 ;         /* Тъмен фон за контраст */
