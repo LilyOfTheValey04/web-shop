@@ -13,12 +13,8 @@ app.use(bodyParser.json())
 app.use(express.static(path.join(__dirname, 'public')));
 
 // Свързване с MongoDB
-
-mongoose.connect(process.env.MONGO_URL,{
-    useNewUrlParser: true,
-    useUnifiedTopology: true
-
-}).then(()=> console.log("Connected to MongoDB"))
+mongoose.connect(process.env.MONGO_URL)
+  .then(() => console.log("Connected to MongoDB"))
   .catch(err => console.log(err));
 
   // Зареждане на API маршрутите
