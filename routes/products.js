@@ -2,19 +2,14 @@ const express = require('express');
 const router = express.Router();
 const Product = require('../models/Product')
 
-// Връща всички продукти
-router.get('/',async (req, res)=>{
-  try{
-    const products = await Product.find(); // Извлича всички продукти от базата данни
-     // 200 OK + празен масив е валиден отговор (няма нужда от 404)
-    res.status(200).json(products); // Връща ги в JSON формат
+router.get('/', async (req, res) => {
+  try {
+      const products = await Product.find();
+      res.json(products); // Връща [] ако няма продукти
+  } catch (err) {
+      res.status(500).json({ error: "Грешка при зареждане" });
   }
-  catch(err){
-    res.status(500).json({message:"Server error" }); // Връща грешка, ако не намери продукти
-  }
-
 });
-
 // Добавяне на нов продукт
 router.post('/', async (req, res) => {
   try {

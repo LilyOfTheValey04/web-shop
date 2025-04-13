@@ -21,7 +21,7 @@ const ProductSchema = new mongoose.Schema({
         }
     },
     price: { 
-        type: Decimal128, 
+        type: mongoose.Types.Decimal128,
         required: true,
         get: v => parseFloat(v.toString()), // Конвертиране към число
         set: v => Decimal128.fromString(v.toFixed(2)) // Запазва 2 дес. знака
@@ -66,3 +66,4 @@ const ProductSchema = new mongoose.Schema({
         virtuals: true 
     }
 });
+module.exports = mongoose.model('Product', ProductSchema);

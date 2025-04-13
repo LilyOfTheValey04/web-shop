@@ -14,13 +14,18 @@ router.post('/',async(req,res)=>{
 });
 
 // Получаване на всички поръчки
-router.get('/',async (req,res)=>{
-    try{
-    const orders = await Order.find().populate('productId');
-    res.json({order,message:'Here are the orders'});
-    }
-    catch(err){
-        res.status(500).json({message:"Server error"}); 
+router.get('/', async (req, res) => {
+    try {
+        const orders = await Order.find()
+            .populate('productId')    // Продукти
+            .populate('customer');   // Потребители
+
+        res.json({ 
+            orders,  // Коригирано от "order" на "orders"
+            message: 'Here are the orders' 
+        });
+    } catch (err) {
+        res.status(500).json({ message: "Server error" }); 
     }
 });
 

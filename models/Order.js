@@ -11,7 +11,7 @@ const OrderSchema = new mongoose.Schema({
         required: true,
         min: 1
     },
-    // Лични данни (съхранени в поръчката за историческа точност)
+    // Лични данни
     firstName: {
         type: String,
         required: true,
@@ -36,13 +36,12 @@ const OrderSchema = new mongoose.Schema({
             required: true
         }
     },
-    // Референция към потребител (ако има регистрация)
-    customer: {
+    // Референция към потребител
+    customer: {  // <--- БЕЗ ДУБЛИРАНЕ! Това е единственото определение
         type: mongoose.Schema.Types.ObjectId,
         ref: 'User',
-        required: false // Незадължително за гости
+        required: false
     },
-    // Цената на продукта в момента на поръчката
     price: {
         type: mongoose.Types.Decimal128,
         required: true
