@@ -1,19 +1,26 @@
+// routes/auth.js
 const express = require('express');
 const router = express.Router();
+const User = require('../models/User');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
-const User = require('../models/User');
 
+// POST /api/auth/login
 router.post('/login', async (req, res) => {
-    // Търси потребителя в базата по username
-    const user = await User.findOne({ username: req.body.username });
-    // Проверява дали потребителят съществува и паролата е вярна
-    if (!user || !(await bcrypt.compare(req.body.password, user.password))) {
-        return res.status(400).json({ message: 'Грешно потребителско име или парола' });
+  try {
+    const { username, password } = req.body;
+    const user = await User.findOne({ username });
+    
+    if (!user || !(await bcrypt.compare(password, user.password))) {
+      return res.status(400).json({ message: "Грешен потребител или парола" });
     }
-     // Създава JWT токен
-    const token = jwt.sign({ id: user._id }, 'secret', { expiresIn: '1h' });
-    // Връща токена към клиента
+
+    const token = jwt.sign({ userId: user._id }, 'your_secret_key', { expiresIn: '1h' });
     res.json({ token });
+
+  } catch (err) {
+    res.status(500).json({ message: "Сървърна грешка" });
+  }
 });
-module.exports= router;
+
+module.exports = router;
