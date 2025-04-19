@@ -23,4 +23,33 @@ router.post('/login', async (req, res) => {
   }
 });
 
+router.post("/register",async(req,res)=>{
+    try{
+   const existingUser = await User.findOne({ 
+    $or:[
+    {email: req.body.email},
+    {username: req.body.username}
+    ]
+  });
+  
+   if(existingUser){
+     return res.status(400).json({message: "Потребителят вече съществува"});
+   }
+
+   const hashedPassword= await bcrypt.hash(req.body.password,10);
+
+   const newUser= new User({
+    username: req.body.username,
+    email:req.body.email,
+    password: hashedPassword
+   });
+
+   await newUser.save();
+   res.status(201).json({message: "Потребителят е създаден успешно"});
+   
+    }catch(err){
+        res.status(500).json({message: "Сървърна грешка"});
+    }
+});
+
 module.exports = router;
