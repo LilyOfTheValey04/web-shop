@@ -1,11 +1,14 @@
 // controllers/productController.js
+
 const Product = require('../models/Product');
+const mongoose = require('mongoose');
+
 
 exports.getAllProducts = async (req, res) => {
   try {
     const products = await Product.find().lean();
 
-    res.render('products', { 
+    res.render('index', { 
     products: products,
     isEmpty: products.length ===0
     }); // Връща [] ако няма продукти
@@ -16,7 +19,11 @@ exports.getAllProducts = async (req, res) => {
 
 exports.createProduct = async (req, res) => {
   try {
-    const newProduct = new Product(req.body); // Създава нов обект от данните в заявката
+  const newProduct = new Product({
+  ...req.body,
+  price: mongoose.Types.Decimal128.fromString(req.body.price.toString())
+});
+
     await newProduct.save(); // Запазва го в MongoDB
     res.redirect('/products'); // Пренасочва към списъка с продукти
   } catch (err) {
