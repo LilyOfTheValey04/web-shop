@@ -2,9 +2,10 @@ const express= require('express');
 const router = express.Router();
 const Order = require('../models/Order');
 const Product = require('../models/Product');
+const authMiddleware = require('../middleware/authMiddleware');
 
 // Създаване на нова поръчка
-router.post('/',async(req,res)=>{
+router.post('/',authMiddleware,async(req,res)=>{
     try{ 
         const product = await Product.findById(req.body.productId);
         if (!product){
@@ -31,7 +32,7 @@ router.post('/',async(req,res)=>{
 });
 
 // Получаване на всички поръчки
-router.get('/', async (req, res) => {
+router.get('/',authMiddleware,async (req, res) => {
     try {
         const orders = await Order.find()
             .populate('productId')    // Продукти

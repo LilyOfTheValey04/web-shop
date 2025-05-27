@@ -37,7 +37,7 @@ const OrderSchema = new mongoose.Schema({
         }
     },
     // Референция към потребител
-    customer: {  // <--- БЕЗ ДУБЛИРАНЕ! Това е единственото определение
+    customer: {  
         type: mongoose.Schema.Types.ObjectId,
         ref: 'User',
         required: false
@@ -51,5 +51,7 @@ const OrderSchema = new mongoose.Schema({
         default: Date.now
     }
 }, { timestamps: true });
+
+//timestamps: true добавя полета createdAt и updatedAt автоматично
 
 module.exports = mongoose.model('Order', OrderSchema);
