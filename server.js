@@ -12,6 +12,8 @@ const port = process.env.PORT || 3000;
 app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, 'views'));
 
+//acsses to folder uploads
+app.use('/uploads', express.static('uploads'));
 // Middleware
 app.use(cors());
 app.use(bodyParser.json());

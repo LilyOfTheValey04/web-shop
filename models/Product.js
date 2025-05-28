@@ -1,5 +1,5 @@
 const mongoose = require('mongoose');
-const validator = require('validator');
+//const validator = require('validator');
 
 const { Decimal128 } = mongoose.Types; // Изисква се явен импорт
 
@@ -28,12 +28,10 @@ const ProductSchema = new mongoose.Schema({
 },
 
     image: { 
-        type: String, 
-        required: true,
-         validate: {
-    validator: v => validator.isURL(v, { protocols: ['http', 'https'] }),
-    message: 'Invalid URL format'}
-    },
+  type: String, 
+  required: true,
+},
+
     shortDescription: { 
         type: String, 
         required: true,

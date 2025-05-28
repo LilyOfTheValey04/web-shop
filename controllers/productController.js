@@ -19,8 +19,26 @@ exports.getAllProducts = async (req, res) => {
 
 exports.createProduct = async (req, res) => {
   try {
+    const newProduct = new Product({
+      name: req.body.name,
+      price: req.body.price,
+      stock: req.body.stock,
+      image: req.file ? req.file.path : '', // ако има снимка
+      shortDescription: req.body.shortDescription,
+      fullDescription: req.body.fullDescription
+    });
+
+    await newProduct.save();
+    res.status(201).json(newProduct);
+  } catch (err) {
+    res.status(400).json({ error: 'Невалидни данни', details: err.message });
+  }
+};
+/*exports.createProduct = async (req, res) => {
+  try {
   const newProduct = new Product({
   ...req.body,
+  image: req.file.path, // път до снимкат
   price: mongoose.Types.Decimal128.fromString(req.body.price.toString())
 });
 
@@ -37,7 +55,7 @@ exports.createProduct = async (req, res) => {
     //  oldInput: req.body // Връщаме въведените данн
    //    });
   }
-};
+};*/
 
 exports.deleteProduct = async (req,res) =>{
     try{
