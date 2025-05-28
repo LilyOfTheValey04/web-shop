@@ -24,6 +24,7 @@ exports.createProduct = async (req, res) => {
       price: req.body.price,
       stock: req.body.stock,
       image: req.file ? req.file.path : '', // ако има снимка
+      description: req.body.description,
       shortDescription: req.body.shortDescription,
       fullDescription: req.body.fullDescription
     });
