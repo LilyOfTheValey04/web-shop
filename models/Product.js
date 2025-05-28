@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const validator = require('validator');
 
 const { Decimal128 } = mongoose.Types; // Изисква се явен импорт
 
@@ -22,11 +23,10 @@ const ProductSchema = new mongoose.Schema({
         }
     },
     price: { 
-        type: mongoose.Types.Decimal128,
-        required: true,
-        get: v => parseFloat(v.toString()), // Конвертиране към число
-        set: v => Decimal128.fromString(v.toFixed(2)) // Запазва 2 дес. знака
-    },
+  type: mongoose.Schema.Types.Decimal128,
+  required: true
+},
+
     image: { 
         type: String, 
         required: true,

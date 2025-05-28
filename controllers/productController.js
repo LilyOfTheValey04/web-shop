@@ -25,12 +25,17 @@ exports.createProduct = async (req, res) => {
 });
 
     await newProduct.save(); // Запазва го в MongoDB
-    res.redirect('/products'); // Пренасочва към списъка с продукти
+   // res.redirect('/products'); // Пренасочва към списъка с продукти !!!!
+   res.status(201).json({ message: 'Продуктът е добавен успешно', product: newProduct });
+
   } catch (err) {
-    res.render('create-product-form', {
-      error: 'Невалидни данни', 
-      oldInput: req.body // Връщаме въведените данн
-       });
+    res.status(400).json({ error: 'Невалидни данни', details: err.message });
+
+
+   // res.render('create-product-form', {
+    //  error: 'Невалидни данни', 
+    //  oldInput: req.body // Връщаме въведените данн
+   //    });
   }
 };
 
