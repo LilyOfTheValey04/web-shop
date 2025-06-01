@@ -20,7 +20,14 @@ const upload = multer({ storage });
 
 router.post('/', upload.single('image'),productController.createProduct);
 router.get('/', productController.getAllProducts);
-//router.post('/', productController.createProduct);
+
+
+// API JSON версия (използва се от JS)
+router.get('/api/:id', productController.getProductByIdJSON);
+
+// HTML версия (използва се от бутона "See more")
+router.get('/:id', productController.getProductByIdPage);
+
 router.delete('/:id',  productController.deleteProduct);
 
 module.exports = router;

@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>	
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" href="/style.css"/>
+    <link rel="icon" href="/images/icon.png" type="image/png">	
+    <title>Celestial jewelry</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+</head>
+<body>
+
+<div class="header-container">
+  <a href="/" class="logo-link">
+    <img src="/images/logo3.png" alt="logo" class="logo">
+  </a>
+
+  <div class="topnav">
+    <a href="/">Home</a>
+    <a class="active" href="#">About us</a>
+    <a href="#products">Products</a>
+    <a href="#contact">Contacts</a>
+
+    <div class="card-container">
+      <a href="/buyForm.html">
+        <img src="/images/bag2.png" alt="Shopping Cart" class="cart-icon">
+        <span id="cart-count">0</span>
+      </a>
+    </div>
+  </div>
+</div>
+
+<!-- Product Details Section -->
+<section class="product-details">
+  <div class="product-image">
+    <img src="/<%= product.image %>" alt="<%= product.name %>">
+  </div>
+  <div class="product-info">
+    <h1><%= product.name %></h1>
+    <p class="short-description"><%= product.shortDescription %></p>
+    <h3>Description</h3>
+    <p class="full-description"><%= product.fullDescription %></p>
+    <p class="price"><strong>Price:</strong> $<%= product.price %></p>
+
+    <!-- Purchase Form -->
+    <form class="purchase-form" action="/buy" method="POST">
+      <label for="quantity">Quantity</label>
+      <input type="number" id="quantity" name="quantity" value="1" min="1" required>
+      <button type="submit" class="buy-button">Buy now</button>
+    </form>
+  </div>
+</section>
+
+<!-- Optional Reviews Section -->
+<section class="reviews">
+  <h2>Customer Reviews</h2>
+  <% if (product.reviews.length === 0) { %>
+    <p>No reviews yet.</p>
+  <% } else { %>
+    <% product.reviews.forEach(review => { %>
+      <div class="review">
+        <p><strong><%= review.user %>:</strong> <%= review.comment %></p>
+      </div>
+    <% }) %>
+  <% } %>
+
+  <!-- Review Form -->
+  <form class="review-form" action="/reviews" method="POST">
+    <h3>Submit Your Review</h3>
+    <label for="review-name">Name:</label>
+    <input type="text" id="review-name" name="name" required>
+    <label for="review-text">Review:</label>
+    <textarea id="review-text" name="review" rows="4" required></textarea>
+    <button type="submit" class="submit-review-button">Submit Review</button>
+  </form>
+</section>
+
+<script src="/script.js"></script>
+</body>
+</html>

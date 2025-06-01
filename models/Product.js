@@ -6,14 +6,20 @@ const { Decimal128 } = mongoose.Types; // Изисква се явен импо�
 const ProductSchema = new mongoose.Schema({
     name: {
         type: String,
+        unique: true,
         required: true,
         trim: true
     },
-    description: {
+    //refference See more for each product
+   /* refference: {
         type: String,
         required: true,
-        trim: true
-    },
+        validate: {
+    validator: v => validator.isURL(v, { protocols: ['http', 'https'] }),
+    message: 'Invalid URL format'
+       
+    }
+},*/
     stock: {
         type: Number,
         required: true,
@@ -28,7 +34,7 @@ const ProductSchema = new mongoose.Schema({
   required: true
 },
 
-    image: { 
+  image: { 
   type: String, 
   required: true,
 },

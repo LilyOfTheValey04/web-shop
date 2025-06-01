@@ -3,7 +3,7 @@
 const Product = require('../models/Product');
 const mongoose = require('mongoose');
 
-
+//връща вс продукти в index ???
 exports.getAllProducts = async (req, res) => {
   try {
     const products = await Product.find().lean();
@@ -17,6 +17,37 @@ exports.getAllProducts = async (req, res) => {
   }
 };
 
+// API JSON версия (използва се от JS) за aminPanel ??
+exports.getProductByIdJSON = async (req, res) => {
+  try {
+    const product = await Product.findById(req.params.id).lean();
+    if (!product) {
+      return res.status(404).json({ error: 'Product not found' });
+    }
+
+    res.json(product);
+  } catch (err) {
+    res.status(500).json({ error: 'Error fetching product by ID' });
+  }
+};
+
+// ejs версия (използва се от бутона "See more")
+exports.getProductByIdPage = async (req, res) =>{
+  try   {
+const product = await Product.findById(req.params.id).lean();
+if(!product){
+ return res.status(404).json({ error: "Продукта не е намерен" });
+}
+
+    res.render('product-details',{product});
+
+  } catch(err){
+    res.status(500).json({error:"Грешка при извличането на продукта по ID"});
+  }
+};
+
+
+
 exports.createProduct = async (req, res) => {
   try {
     const newProduct = new Product({
@@ -29,10 +60,28 @@ exports.createProduct = async (req, res) => {
       fullDescription: req.body.fullDescription
     });
 
+    
     await newProduct.save();
-    res.status(201).json(newProduct);
-  } catch (err) {
-    res.status(400).json({ error: 'Невалидни данни', details: err.message });
+     console.log('✅ Product saved successfully. Redirecting...');
+    return res.redirect('/admin');
+
+    } catch (err) {
+
+      console.log('❌ Error while saving product:', err);
+
+    const products = await Product.find().lean();
+
+ if(err.code === 11000){
+return res.status(400).render('adminPanel',{
+  products,
+   errorMessage: 'Вече съществува продукт с това име.'
+});
+ }
+
+    res.status(500).render('error', {
+      error: 'Грешка при създаване на продукт',
+      details: err.message
+    });
   }
 };
 /*exports.createProduct = async (req, res) => {
@@ -68,7 +117,8 @@ exports.deleteProduct = async (req,res) =>{
     });
       }
 
-      res.redirect('/products');
+    res.status(200).json({ message: 'Product deleted successfully' });
+      
      } catch(err){
        res.status(500).render('error', {
         error: 'Грешка при изтриване на продукта'

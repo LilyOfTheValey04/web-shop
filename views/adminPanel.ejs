@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Admin Panel</title>
+  <link rel="stylesheet" href="/style.css" />
+  <style>
+   /* body { font-family: 'Poppins', sans-serif; padding: 20px; }
+    .admin-form input, .admin-form textarea { width: 100%; margin-bottom: 10px; }
+    .button-container button { margin-right: 10px; }
+    .product-card { border: 1px solid #ccc; padding: 10px; margin-bottom: 10px; }*/
+  </style>
+</head>
+<body>
+
+    
+   <!-- Admin Panel Form -->
+	<div class="main-content"> 
+    <form class="admin-form" id="adminForm" method="POST" action="/api/products" enctype="multipart/form-data">
+
+        <h2>Admin Panel</h2>
+        <%if(typeof errorMessage !== 'undefined'){%>
+         <div class ="error-message "><%= errorMessage %></div>
+<% } %>
+        <h3>Add Item</h3>
+
+            <!-- Полета за добавяне на нов елемент -->
+            <label for="name">Name of Jewelry</label>
+            <input type="text" id="name" name="name"  required>
+
+            <label for="price">Price</label>
+            <input type="number" id="price" name="price" step="0.01"  required>
+
+            <label for="image">Upload Image here</label>
+            <input type="file" id="image" name="image" accept="image/*"  required>
+            <img id="imagePreview" src="" style="max-width: 150px; margin-top: 10px;" />
+
+
+            <label for="shortDescription">Short Description</label>
+            <textarea id="shortDescription" name="shortDescription" placeholder=" (max 100 characters)" required maxlength="100"></textarea>
+
+            <label for="fullDescription">Full Description</label>
+            <textarea id="fullDescription" name="fullDescription"  required></textarea>
+			
+		    <label for="stock">Stock:</label>
+            <input type="number" id="stock" name="stock" min="0" required />
+
+            <input type="hidden" id="productId" name="productId" />
+
+
+            <!-- Бутон за добавяне на новия елемент -->
+           
+			<div class="button-container">
+      <button type="button" class="order-button" onclick="loadProduct()">Load by ID</button>
+      <button type="button" class="order-button" onclick="deleteProduct()">Delete</button>
+      <button type="submit"class="order-button">Save</button>
+           </div>
+
+            <!-- Секция за съществуващи елементи -->
+            <div class="item-container">
+                <h3>Existing Items</h3>
+                <% products.forEach(product => { %>
+              <div class="product-card">
+                <strong><%= product.name %></strong><br/>
+                price:<%=product.price %><br />
+                <img src="/<%= product.image %>" alt="<%= product.name %>" style="max-width:100px" /><br />
+              </div>
+            <%  }) %>
+            </div>
+         </div>
+    </form>
+
+    
+
+    <script src="script.js"></script>
+</body>
+</html>

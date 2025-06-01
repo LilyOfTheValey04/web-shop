@@ -24,6 +24,8 @@ const productRouter = require('./routes/products');
 const orderRouter = require('./routes/orders');
 const authRouter = require('./routes/auth');
 
+
+
 app.use('/api/products', productRouter); // Начална страница и продукти
 app.use('/api/orders', orderRouter);
 app.use('/api/auth', authRouter);
@@ -43,6 +45,15 @@ app.get('/', async (req, res) => {
     res.status(500).render('error', { error: 'Грешка при зареждане на началната страница' });
   }
 });
+
+// Админски панел с продукти
+const Product = require('./models/Product');
+
+app.get('/admin', async (req, res) => {
+  const products = await Product.find().lean();
+  res.render('adminPanel', { products });
+});
+
 
 app.listen(port, () => {
   console.log(`Server is running on port ${port}`);

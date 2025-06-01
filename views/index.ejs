@@ -65,9 +65,11 @@
           <article class="product">
             <img src="<%= product.image %>" alt="<%= product.name %>">
             <h3><%= product.name %></h3>
-            <p><%= product.description %></p>
+            <p><%= product.shortDescription %></p>
             <p><strong>Price:</strong> <%= product.price %></p>
-            <a href="product3.html" class="product-link">See more</a>
+            <a href="/api/products/<%= product._id %>" class="product-link">See more</a>
+
+            <!-- <a href="product4.html" class="product-link">See more</a> ! -->
           </article>
         <% }) %>   
 				

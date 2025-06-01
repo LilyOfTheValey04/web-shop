@@ -132,6 +132,74 @@ document.addEventListener("DOMContentLoaded", function() {
     }, headingText.length * 100 + 500);
 });
 
+//adminPanel.ejs 
+// Попълване на формата с данни за продукт
+function fillForm(product){
+    document.getElementById("productId").value = product._id;
+    document.getElementById("name").value = product.name;
+    document.getElementById("price").value = parseFloat(product.price?.$numberDecimal || product.price);
+    document.getElementById("shortDescription").value = product.shortDescription;
+    document.getElementById("fullDescription").value= product.fullDescription;
+    document.getElementById("stock").value= product.stock; 
+
+    document.getElementById("imagePreview").src = "/" + product.image;
+
+
+}
+
+// Зареждане на продукт по ID (въвежда се ръчно)
+async function loadProduct(){
+    const id = prompt("Enter product's id:");
+    if(!id) return;
+
+    const res = await fetch(`/api/products/${id}`);
+
+    if(!res.ok) return alert ("There is not such a product");
+
+    const product = await res.json();
+    fillForm(product);
+}
+
+    // Изтриване на продукт
+    async function deleteProduct(){
+        const id = document.getElementById("productId").value;
+        if(!id) return alert("The product isnt loaded");
+        if (!confirm("Do you really want to delete this product?")) return;
+
+        const res = await fetch(`/api/products/${id}`, { method: 'DELETE' });
+
+        if (res.ok) {
+        alert ("Product deleted");
+        location.reload();}
+        else alert ("Error with deleting");
+    }
+
+    // Създаване или редакция
+ /*   document.getElementById("adminForm").addEventListerner("submint", async function (e){
+    e.preventDefault();
+
+    const id = document.getElementById("productId").value;
+    const data ={
+        name: document.getElementById("name").value,
+        price: document.getElementById("price").value,
+        image: document.getElementById("image").value,
+        shortDescription: document.getElementById("shortDescription").value,
+        fullDescription: document.getElementById("fullDescription").value,
+        stock: document.getElementById("stock").value,
+
+    };
+
+    const method = id ? 'PUT' : 'POST';
+    //logict for uploading file must be here but not implemented 
+    //
+    //
+
+    if (res.ok) location.reload();
+    else allert("error with save/create");
+
+    });*/
+
+
 
 
 

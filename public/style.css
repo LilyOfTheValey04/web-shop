@@ -8,6 +8,14 @@ body{
 	height: 100vh; 
 
 }
+.error-message {
+  color: #a94442;
+  background-color: #f2dede;
+  border: 1px solid #ebccd1;
+  padding: 10px;
+  border-radius: 5px;
+  margin-bottom: 15px;
+}
 
 
 /* Общ контейнер: черен фон, хоризонтално подреждане с flex */
@@ -345,7 +353,7 @@ body{
 /*Complete order Form*/
 
 /* Общи стилове за двете форми */
-.complete-order-form, .register-form, .login-form,.admin-form {
+.complete-order-form, .register-form, .login-form {
 	width: 550px;
 	position: fixed;
 	top: 50%;
@@ -361,6 +369,27 @@ body{
 	gap: 10px;
 }
 
+.main-content {
+    margin-top: 65px;
+	 justify-content: center;
+    padding: 20px;
+    box-sizing: border-box;
+}
+
+.admin-form {
+    width: 750px;
+    margin: 0 auto; /* Центриране */
+    animation: fadeIn 0.5s ease-in-out forwards;
+    background: white;
+    padding: 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    border-radius: 8px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    max-height: calc(100vh - 105px);
+    overflow-y: auto;
+}
 
 
 /*.admin-container {
@@ -393,7 +422,7 @@ body{
 
 .admin-form textarea {
 	width: 80%;
-	height: 200px; /* или колкото ти е удобно */
+	height: 1000px; /* или колкото ти е удобно */
 	resize: vertical; /* позволява потребителят да го разширява при нужда */
 	padding: 10px;
 	border: 1px solid #ddd;
