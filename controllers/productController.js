@@ -62,13 +62,12 @@ exports.createProduct = async (req, res) => {
 
     
     await newProduct.save();
-     console.log('✅ Product saved successfully. Redirecting...');
+    
     return res.redirect('/admin');
 
     } catch (err) {
 
-      console.log('❌ Error while saving product:', err);
-
+      
     const products = await Product.find().lean();
 
  if(err.code === 11000){
@@ -84,6 +83,34 @@ return res.status(400).render('adminPanel',{
     });
   }
 };
+
+exports.updateProduct = async (req, res) => {
+  try {
+    const updateData = {
+      name: req.body.name,
+      price: req.body.price,
+      stock: req.body.stock,
+      shortDescription: req.body.shortDescription,
+      fullDescription: req.body.fullDescription
+    };
+
+    if (req.file) {
+      updateData.image = req.file.path;
+    }
+
+    const updated = await Product.findByIdAndUpdate(req.params.id, updateData, { new: true });
+
+    if (!updated) {
+      return res.status(404).json({ error: 'Продуктът не е намерен' });
+    }
+
+    res.status(200).json(updated);
+  } catch (err) {
+    res.status(500).json({ error: 'Грешка при редактиране на продукта', details: err.message });
+  }
+};
+
+
 /*exports.createProduct = async (req, res) => {
   try {
   const newProduct = new Product({

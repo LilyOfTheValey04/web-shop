@@ -144,20 +144,18 @@ function fillForm(product){
 
     document.getElementById("imagePreview").src = "/" + product.image;
 
-
 }
 
 // Зареждане на продукт по ID (въвежда се ръчно)
-async function loadProduct(){
-    const id = prompt("Enter product's id:");
-    if(!id) return;
+async function loadProduct() {
+  const id = prompt("Enter product's id:");
+  if (!id) return;
 
-    const res = await fetch(`/api/products/${id}`);
+  const res = await fetch(`/api/products/${id}/json`);
+  if (!res.ok) return alert(" Няма такъв продукт!");
 
-    if(!res.ok) return alert ("There is not such a product");
-
-    const product = await res.json();
-    fillForm(product);
+  const product = await res.json();
+  fillForm(product);
 }
 
     // Изтриване на продукт
@@ -173,31 +171,71 @@ async function loadProduct(){
         location.reload();}
         else alert ("Error with deleting");
     }
+    function submitForm(method) {
+  const form = document.getElementById("adminForm");
+  const id = document.getElementById("productId").value;
+  const formData = new FormData(form);
+
+  let url = '/api/products';
+  if (method === 'PUT') {
+    if (!id) return alert(" Няма ID – не може да се редактира");
+    url = `/api/products/${id}`;
+  }
+
+  fetch(url, {
+    method,
+    body: formData
+  }).then(async (res) => {
+    if (res.ok) {
+      alert(method === 'PUT' ? ' Продуктът е обновен' : '✅ Продуктът е създаден');
+      location.reload();
+    } else {
+      const err = await res.json();
+      alert(" Грешка: " + (err.error || 'Неуспешно записване'));
+    }
+  });
+}
+
 
     // Създаване или редакция
- /*   document.getElementById("adminForm").addEventListerner("submint", async function (e){
+    /*document.getElementById("createBtn").addEventListener("click",  function (e){
     e.preventDefault();
+    submitForm('POST');
+    });
 
-    const id = document.getElementById("productId").value;
-    const data ={
-        name: document.getElementById("name").value,
-        price: document.getElementById("price").value,
-        image: document.getElementById("image").value,
-        shortDescription: document.getElementById("shortDescription").value,
-        fullDescription: document.getElementById("fullDescription").value,
-        stock: document.getElementById("stock").value,
+    document.getElementById("updateBtn").addEventListener("click", function (e){
+    e.preventDefault();
+    submitForm('PUT');
+    });
 
-    };
+    function submitForm(method){
 
-    const method = id ? 'PUT' : 'POST';
-    //logict for uploading file must be here but not implemented 
-    //
-    //
+        const form = document.getElementById("adminForm");
+        const id = document.getElementById("productId").value;
+        const formData = new FormData(form);
 
-    if (res.ok) location.reload();
-    else allert("error with save/create");
+        let url ='/api/products';
+        if (method === 'PUT'){
+            if(!id) return alert("Продуктът не е зареден!");
+            url = `/api/products/${id}`;
+        }
 
-    });*/
+        fetch(url,{
+            method,
+            body:formData
+        }).then(res => {
+            if(res.ok){
+                alert(method === 'PUT' ? "Продуктът е обновен." : "Продуктът е създаден.");
+                location.reload();
+            } else{
+                res.json().then(err => {
+                    alert("⚠️ Грешка: " + (err.error || "Неуспешно записване"));
+                
+                });
+            }
+        });
+    }*/
+
 
 
 

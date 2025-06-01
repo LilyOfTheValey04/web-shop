@@ -23,10 +23,15 @@ router.get('/', productController.getAllProducts);
 
 
 // API JSON версия (използва се от JS)
-router.get('/api/:id', productController.getProductByIdJSON);
+//router.get('/api/:id', productController.getProductByIdJSON);
 
-// HTML версия (използва се от бутона "See more")
+// API маршрут, който връща JSON
+router.get('/:id/json', productController.getProductByIdJSON);
+
+// HTML страница
 router.get('/:id', productController.getProductByIdPage);
+
+router.put('/:id', upload.single('image'), productController.updateProduct);
 
 router.delete('/:id',  productController.deleteProduct);
 
