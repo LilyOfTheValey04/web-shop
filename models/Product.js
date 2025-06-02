@@ -55,7 +55,8 @@ const ProductSchema = new mongoose.Schema({
         },
         comment: {
             type: String,
-            maxlength: 500
+            maxlength: 500,
+            required: true
         },    
     
         createdAt: {

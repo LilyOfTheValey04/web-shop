@@ -110,6 +110,52 @@ exports.updateProduct = async (req, res) => {
   }
 };
 
+exports.deleteProduct = async (req,res) =>{
+    try{
+     const deleteProduct = await Product.findByIdAndDelete(req.params.id); // Търси продукт по ID и го изтрива
+     if(!deleteProduct){
+        // 404 Not Found, ако не намери продукта
+        return res.status(404).render('error', {
+      error: 'Грешка при изтриване на продукта'
+    });
+      }
+
+    res.status(200).json({ message: 'Product deleted successfully' });
+      
+     } catch(err){
+       res.status(500).render('error', {
+        error: 'Грешка при изтриване на продукта'
+    });
+      }
+}
+
+exports.addReview = async (req, res) => {
+  try {
+    const product = await Product.findById(req.params.id);
+
+    if (!product) {
+      return res.status(404).render('error', { error: 'Product not found' });
+    }
+
+    const review = {
+      user: req.user ? req.user._id : null, // Ако имаш login, тук ще е ID-то
+        comment: req.body.comment,
+      createdAt: new Date()
+    };
+
+    product.reviews.push(review);
+    await product.save();
+
+    
+    res.redirect(`/api/products/${product._id}`);
+    
+
+  } catch (err) {
+    console.error(err);
+    res.status(500).render('error', { error: 'Error while saving review' });
+  }
+};
+
 
 /*exports.createProduct = async (req, res) => {
   try {
@@ -134,21 +180,4 @@ exports.updateProduct = async (req, res) => {
   }
 };*/
 
-exports.deleteProduct = async (req,res) =>{
-    try{
-     const deleteProduct = await Product.findByIdAndDelete(req.params.id); // Търси продукт по ID и го изтрива
-     if(!deleteProduct){
-        // 404 Not Found, ако не намери продукта
-        return res.status(404).render('error', {
-      error: 'Грешка при изтриване на продукта'
-    });
-      }
 
-    res.status(200).json({ message: 'Product deleted successfully' });
-      
-     } catch(err){
-       res.status(500).render('error', {
-        error: 'Грешка при изтриване на продукта'
-    });
-      }
-}

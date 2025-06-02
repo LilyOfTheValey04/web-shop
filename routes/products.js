@@ -21,6 +21,7 @@ const upload = multer({ storage });
 router.post('/', upload.single('image'),productController.createProduct);
 router.get('/', productController.getAllProducts);
 
+router.post('/:id/review', productController.addReview);
 
 // API JSON версия (използва се от JS)
 //router.get('/api/:id', productController.getProductByIdJSON);
@@ -34,5 +35,7 @@ router.get('/:id', productController.getProductByIdPage);
 router.put('/:id', upload.single('image'), productController.updateProduct);
 
 router.delete('/:id',  productController.deleteProduct);
+
+
 
 module.exports = router;

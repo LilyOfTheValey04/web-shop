@@ -196,6 +196,12 @@ async function loadProduct() {
   });
 }
 
+function clearForm() {
+  document.getElementById("adminForm").reset(); // изчиства всички полета
+  document.getElementById("productId").value = ""; // скритото ID поле също
+  document.getElementById("imagePreview").src = ""; // маха снимката, ако има преглед
+}
+
 
     // Създаване или редакция
     /*document.getElementById("createBtn").addEventListener("click",  function (e){

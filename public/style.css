@@ -377,7 +377,7 @@ body{
 }
 
 .admin-form {
-    width: 750px;
+    width: 790px;
     margin: 0 auto; /* Центриране */
     animation: fadeIn 0.5s ease-in-out forwards;
     background: white;
