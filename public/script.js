@@ -1,138 +1,149 @@
-// Buy now button code to add to cart
-document.addEventListener("DOMContentLoaded", function() {
-    let cartCountElement = document.getElementById("cart-count");
-    let cartCount;
-    
-    if (localStorage.getItem("cartCount")) {
-        cartCount = parseInt(localStorage.getItem("cartCount"));
-    } else {
-        cartCount = 0;
-    }
-    
+document.addEventListener("DOMContentLoaded", function () {
+  //  Покажи текущия брой в количката
+  const cartCountElement = document.getElementById("cart-count");
+  const cartCount = parseInt(localStorage.getItem("cartCount")) || 0;
+  if (cartCountElement) {
     cartCountElement.innerText = cartCount;
-    
-    let buyButton = document.querySelector(".buy-button");
-    if (buyButton) {
-        buyButton.addEventListener("click", function(event) {
-            event.preventDefault();
+  }
 
-            let quantityInput = document.getElementById("quantity");
-            let quantityValue = parseInt(quantityInput.value) || 1;
-          
-            cartCount += quantityValue;
-            cartCountElement.innerText = cartCount;
-            localStorage.setItem("cartCount", cartCount);
-            alert("Product added to cart!");
-        });
-    }
-});
+  //  Buy now бутон (само на product-details страница)
+  const buyButton = document.querySelector(".buy-button");
+  if (buyButton) {
+    buyButton.addEventListener("click", function (event) {
+      event.preventDefault();
 
-// Buy form - button code
-let orderForm = document.getElementById("orderForm");
-if (orderForm) {
-    orderForm.onsubmit = handleOrderSubmit;
-    
-    // Взимаме бутона "Cancel" по id
-    let cancelOrderButton = document.getElementById("cancel-order");
+      const quantityInput = document.getElementById("quantity");
+      const quantity = parseInt(quantityInput.value) || 1;
+
+      const productId = buyButton.getAttribute("data-id"); //  ВАЖНО: трябва да го има в HTML
+
+      if (!productId) {
+        return alert("Missing product ID");
+      }
+
+      // Съхраняваме в localStorage
+      localStorage.setItem("lastProductId", productId);
+      localStorage.setItem("lastQuantity", quantity);
+      localStorage.setItem("cartCount", quantity);
+
+      if (cartCountElement) {
+        cartCountElement.innerText = quantity;
+      }
+
+      alert("Product added to cart!");
+    });
+  }
+
+  //  Обработка на buyForm (buyForm.html)
+  const orderForm = document.getElementById("orderForm");
+  if (orderForm) {
+    orderForm.addEventListener("submit", async function (event) {
+      event.preventDefault();
+
+      const firstName = document.getElementById("complete-order-name").value;
+      const lastName = document.getElementById("complete-order-surname").value;
+      const address = document.getElementById("complete-order-address").value;
+      const productId = localStorage.getItem("lastProductId");
+      const quantity = localStorage.getItem("lastQuantity");
+
+      if (!productId || !quantity) {
+        return alert("Няма продукт в количката");
+      }
+
+      const res = await fetch("/api/orders", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          productId,
+          quantity,
+          firstName,
+          lastName,
+          address,
+        }),
+      });
+
+      if (res.ok) {
+        alert(`${firstName}, благодарим за поръчката!`);
+        localStorage.removeItem("cartCount");
+        localStorage.removeItem("lastProductId");
+        localStorage.removeItem("lastQuantity");
+        orderForm.reset();
+         window.location.href = "/"
+        if (cartCountElement) cartCountElement.innerText = "0";
+      } else {
+        const err = await res.json();
+        alert("Грешка: " + (err.error || "Неуспешна поръчка"));
+      }
+    });
+
+    //  Cancel бутона
+    const cancelOrderButton = document.getElementById("cancel-order");
     if (cancelOrderButton) {
-        cancelOrderButton.addEventListener("click", handleCancelOrder);
+      cancelOrderButton.addEventListener("click", function (event) {
+        event.preventDefault();
+        localStorage.removeItem("cartCount");
+        localStorage.removeItem("lastProductId");
+        localStorage.removeItem("lastQuantity");
+        if (cartCountElement) cartCountElement.innerText = "0";
+        alert("Поръчката е отменена.");
+        location.reload();
+         window.location.href = "/";
+      });
     }
-}
+  }
 
-function handleOrderSubmit(event) {
-    event.preventDefault(); // Спира презареждането
+  //  Reviews (ако има reviewForm)
+  const reviewForm = document.getElementById("reviewForm");
+  if (reviewForm) {
+    reviewForm.onsubmit = function (event) {
+      event.preventDefault();
+      const reviewText = document.getElementById("review-text").value;
+      const reviewName = document.getElementById("review-name").value;
+      const reviewContainer = document.getElementById("reviews");
 
-    let nameInput = document.getElementById("complete-order-name").value;
-    alert(nameInput + ", thank you for your order! :) ");
-    event.target.reset(); // Нулиране на формата
-}
+      if (!reviewText.trim() || !reviewName.trim()) {
+        return alert("Please fill in all fields!");
+      }
 
-// Cancel order button code
-function handleCancelOrder(event) {
-    event.preventDefault();
+      const newReview = document.createElement("p");
+      newReview.innerHTML = `<strong>${reviewName}</strong>: ${reviewText}`;
+      newReview.classList.add("review-item");
 
-    // Изтриваме брояча от localStorage
-    localStorage.removeItem("cartCount");
+      reviewContainer.prepend(newReview);
+      reviewForm.reset();
+    };
+  }
 
-    // Нулираме видимия брояч в сайта
-    let cartCountElement = document.getElementById("cart-count");
-    if (cartCountElement) {
-        cartCountElement.innerText = 0;
-    }
+  //  Typewriter ефект
+  const heading = document.getElementById("hero-heading");
+  const paragraph = document.getElementById("hero-paragraph");
 
-    alert("Order canceled!");
-    location.reload(); // Презарежда страницата (по желание)
-}
-
-// Reviews code
-let reviewForm = document.getElementById("reviewForm");
-if (reviewForm) {
-    reviewForm.onsubmit = submitReview;
-}
-
-function submitReview(event) {
-    event.preventDefault();
-
-    let reviewText = document.getElementById("review-text").value;
-    let reviewName = document.getElementById("review-name").value;
-    let reviewContainer = document.getElementById("reviews");
-
-    if (reviewText.trim() === "" || reviewName.trim() === "") {
-        alert("Please fill in all fields!");
-        return;
-    }
-
-    let newReview = document.createElement("p");
-    newReview.innerHTML = `<strong>${reviewName}</strong>: ${reviewText}`;
-    newReview.classList.add("review-item");
-
-    reviewContainer.prepend(newReview);
-    reviewForm.reset();
-}
-
-// Typewriter effect for HERO section ONLY
-
-// Function to simulate a typewriter effect
-function typeWrite(element, text, delay) {
-    let i = 0; // Initialize the character index
+  function typeWrite(element, text, delay) {
+    let i = 0;
     function type() {
-        // If there are still characters left to display
-        if (i < text.length) {
-            // Append the next character to the element's content
-            element.innerHTML += text.charAt(i);
-            i++; // Increment the index
-            // Call this function again after the specified delay
-            setTimeout(type, delay);
-        }
+      if (i < text.length) {
+        element.innerHTML += text.charAt(i);
+        i++;
+        setTimeout(type, delay);
+      }
     }
-    // Start the typewriter effect
     type();
-}
+  }
 
-// Wait until the DOM is fully loaded
-document.addEventListener("DOMContentLoaded", function() {
-    // Get references to the heading and paragraph elements in the hero section
-    const heading = document.getElementById("hero-heading");
-    const paragraph = document.getElementById("hero-paragraph");
-
-    // Define the text to be typed out
+  if (heading && paragraph) {
     const headingText = "Our new designs";
-    const paragraphText = "Sweet and stylish way to show your\nunique love";;
-
-    // Clear any existing content in the elements
+    const paragraphText = "Sweet and stylish way to show your\nunique love";
     heading.innerHTML = "";
     paragraph.innerHTML = "";
-
-    // Start typing the heading text with a delay of 100ms between characters
     typeWrite(heading, headingText, 100);
-
-    // Wait until the heading is finished, plus an extra 500ms delay, then start typing the paragraph text
     setTimeout(() => {
-        typeWrite(paragraph, paragraphText, 50);
+      typeWrite(paragraph, paragraphText, 50);
     }, headingText.length * 100 + 500);
+  }
 });
 
-//adminPanel.ejs 
 // Попълване на формата с данни за продукт
 function fillForm(product){
     document.getElementById("productId").value = product._id;
@@ -201,48 +212,6 @@ function clearForm() {
   document.getElementById("productId").value = ""; // скритото ID поле също
   document.getElementById("imagePreview").src = ""; // маха снимката, ако има преглед
 }
-
-
-    // Създаване или редакция
-    /*document.getElementById("createBtn").addEventListener("click",  function (e){
-    e.preventDefault();
-    submitForm('POST');
-    });
-
-    document.getElementById("updateBtn").addEventListener("click", function (e){
-    e.preventDefault();
-    submitForm('PUT');
-    });
-
-    function submitForm(method){
-
-        const form = document.getElementById("adminForm");
-        const id = document.getElementById("productId").value;
-        const formData = new FormData(form);
-
-        let url ='/api/products';
-        if (method === 'PUT'){
-            if(!id) return alert("Продуктът не е зареден!");
-            url = `/api/products/${id}`;
-        }
-
-        fetch(url,{
-            method,
-            body:formData
-        }).then(res => {
-            if(res.ok){
-                alert(method === 'PUT' ? "Продуктът е обновен." : "Продуктът е създаден.");
-                location.reload();
-            } else{
-                res.json().then(err => {
-                    alert("⚠️ Грешка: " + (err.error || "Неуспешно записване"));
-                
-                });
-            }
-        });
-    }*/
-
-
 
 
 

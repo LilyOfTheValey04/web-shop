@@ -30,21 +30,21 @@ exports.createOrder = async (req, res) => {
     const totalPrice = parseFloat(product.price.toString()) * req.body.quantity;
 
     const newOrder = new Order({
-      product: product._id,
-      quantity: req.body.quantity,
-      customer: {
-        name: req.body.name,
-        surname: req.body.surname,
-        address: req.body.address
-      },
-      price: totalPrice
+      
+       product: product._id,
+  quantity: req.body.quantity,
+  firstName: req.body.firstName,
+  lastName: req.body.lastName,
+  address: req.body.address,
+  price: totalPrice
     });
 
     product.stock -= req.body.quantity;
     await product.save();
     await newOrder.save();
 
-    res.status(201).json(newOrder);
+return res.status(201).json(newOrder); 
+
   } catch (err) {
     res.status(500).json({ error: err.message });
   }

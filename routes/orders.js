@@ -2,7 +2,9 @@ const express = require('express');
 const router = express.Router();
 const multer = require('multer');
 const path = require('path');
-const OrderController = require('../controllers/orderController');
+const orderController = require('../controllers/orderController');
+
+
 //const authMiddleware = require('../middleware/authMiddleware');
 
 
@@ -10,8 +12,8 @@ const OrderController = require('../controllers/orderController');
 //router.post('/',authMiddleware, orderController.createOrder);
 //router.get('/',authMiddleware, orderController.getOrder);
 
-router.post('/', OrderController.createOrder);
-router.get('/', OrderController.getOrder);
+router.post('/', orderController.createOrder);
+router.get('/', orderController.getOrder);
 
 
 module.exports= router;

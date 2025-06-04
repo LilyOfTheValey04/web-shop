@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 
 const OrderSchema = new mongoose.Schema({
-    productId: { 
+    product: { 
         type: mongoose.Schema.Types.ObjectId, 
         ref: 'Product',
         required: true 
@@ -23,18 +23,10 @@ const OrderSchema = new mongoose.Schema({
         trim: true
     },
     address: {
-        street: {
-            type: String,
-            required: true
-        },
-        city: {
-            type: String,
-            required: true
-        },
-        postalCode: {
-            type: String,
-            required: true
-        }
+        
+    type: String,
+    required: true
+        
     },
     // Референция към потребител
     customer: {  
