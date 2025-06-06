@@ -33,6 +33,7 @@ const OrderSchema = new mongoose.Schema({
     required: true
         
     },
+   
     // Референция към потребител
     customer: {  
         type: mongoose.Schema.Types.ObjectId,

@@ -48,6 +48,10 @@ const ProductSchema = new mongoose.Schema({
         type: String, 
         required: true 
     },
+    purchaseCount: {
+    type: Number,
+    default: 0  
+    },
     reviews: [{
         user: {
             type: mongoose.Schema.Types.ObjectId,

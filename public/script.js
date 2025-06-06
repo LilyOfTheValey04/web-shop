@@ -176,7 +176,7 @@ async function loadProduct() {
         else alert ("Error with deleting");
     }
 
-    
+
     function submitForm(method) {
   const form = document.getElementById("adminForm");
   const id = document.getElementById("productId").value;
@@ -193,7 +193,7 @@ async function loadProduct() {
     body: formData
   }).then(async (res) => {
     if (res.ok) {
-      alert(method === 'PUT' ? ' Продуктът е обновен' : '✅ Продуктът е създаден');
+      alert(method === 'PUT' ? ' Продуктът е обновен' : ' Продуктът е създаден');
       location.reload();
     } else {
       const err = await res.json();

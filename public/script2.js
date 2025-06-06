@@ -89,9 +89,7 @@ if (buyButton) {
       if (res.ok) {
         alert(`${firstName}, thank you!`);
         localStorage.removeItem("cart");
-       /* localStorage.removeItem("cartCount");
-        localStorage.removeItem("lastProductId");
-        localStorage.removeItem("lastQuantity");*/
+      
         orderForm.reset();
          window.location.href = "/"
        // if (cartCountElement) cartCountElement.innerText = "0";
@@ -113,20 +111,6 @@ if (cancelOrderButton) {
   });
 }
 
-    /*const cancelOrderButton = document.getElementById("cancel-order");
-    if (cancelOrderButton) {
-      cancelOrderButton.addEventListener("click", function (event) {
-        event.preventDefault();
-        localStorage.removeItem("cartCount");
-        localStorage.removeItem("lastProductId");
-        localStorage.removeItem("lastQuantity");
-        if (cartCountElement) cartCountElement.innerText = "0";
-        alert("Поръчката е отменена.");
-        location.reload();
-         window.location.href = "/";
-      });
-    }
-  }*/
 
   //  Reviews (ако има reviewForm)
   const reviewForm = document.getElementById("reviewForm");

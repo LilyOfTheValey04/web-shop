@@ -38,6 +38,7 @@ exports.createOrder = async (req, res) => {
       }
 
       product.stock -= item.quantity;
+      product.purchaseCount = (product.purchaseCount || 0) + item.quantity;
       await product.save();
 
       totalPrice += parseFloat(product.price.toString()) * item.quantity;
