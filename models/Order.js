@@ -1,16 +1,21 @@
 const mongoose = require('mongoose');
 
 const OrderSchema = new mongoose.Schema({
-    product: { 
-        type: mongoose.Schema.Types.ObjectId, 
-        ref: 'Product',
-        required: true 
+  items: [
+  {
+    product: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'Product',
+      required: true
     },
     quantity: {
-        type: Number,
-        required: true,
-        min: 1
-    },
+      type: Number,
+      required: true,
+      min: 1
+    }
+  }
+],
+
     // Лични данни
     firstName: {
         type: String,
