@@ -9,25 +9,7 @@
 </head>
 <body>
 
-<div class="header-container">
-  <a href="/" class="logo-link">
-    <img src="/images/logo3.png" alt="logo" class="logo">
-  </a>
-
-  <div class="topnav">
-    <a href="/">Home</a>
-    <a class="active" href="#">About us</a>
-    <a href="#products">Products</a>
-    <a href="#contact">Contacts</a>
-
-    <div class="card-container">
-      <a href="/buyForm.html">
-        <img src="/images/bag2.png" alt="Shopping Cart" class="cart-icon">
-        <span id="cart-count">0</span>
-      </a>
-    </div>
-  </div>
-</div>
+  <%- include('partials/header') %>
 
 <!-- Product Details Section -->
 <section class="product-details">
@@ -83,7 +65,10 @@
 
   <button type="submit" class="submit-review-button">Submit Review</button>
 </form>
+</section>
 
+<!-- Footer Section -->
+<%- include("partials/footer") %>
 
 <script src="/script.js"></script>
 </body>

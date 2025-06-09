@@ -530,6 +530,7 @@ footer {
 	display: flex;                 /* Включва Flexbox за footer-а */
     justify-content: space-around; /* Равно разпределяне на децата в ширината */
     flex-wrap: wrap; 
+	/* width: 100%;*/
 }
 
 .footer-contacts, .footer-social, .footer-policy {

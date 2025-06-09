@@ -18,35 +18,7 @@
 </head>
 <body>
 
-    <div class="header-container">
-  
-        <!-- Лого (линк към началната страница) -->
-        <a href="index.html" class="logo-link">
-          <img src="images/logo3.png" alt="logo" class="logo">
-        </a>
-      
-        <!-- Навигационно меню -->
-        <div class="topnav">
-          <a href="index.ejs">Home</a>
-          <a class="active" href="#">About us</a>
-          <a href="#products">Products</a>
-          <a href="#contact">Contacts</a>
-
-          <div class="profile">
-            <a href="logIn.html">
-              <img src="images/user.png" alt ="User Icon" class="user-icon">
-            </a>
-          </div>
-          
-          <!-- Иконка на количката -->
-          <div class="card-container">
-            <a href="buyForm.html">
-              <img src="images/bag2.png" alt="Shopping Cart" class="cart-icon">
-              <span id="cart-count">0</span>
-            </a>
-          </div>
-        </div>
-      </div>
+    <%- include('partials/header') %>
     
    <!-- Admin Panel Form -->
 	<div class="main-content"> 
@@ -112,7 +84,6 @@
          </div>
     </form>
 
-    
     <script src="script.js"></script>
 </body>
 </html>
