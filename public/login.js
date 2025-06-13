@@ -1,7 +1,7 @@
-document.getElementById("login-fprm").addEventListener("submit",async function(event){
+document.getElementById("login-form").addEventListener("submit", async function(event){
     event.preventDefault();
 
-    const username= document.getElementById("username").value;
+    const username = document.getElementById("username").value;
     const password = document.getElementById("password").value;
 
     try {
@@ -11,18 +11,17 @@ document.getElementById("login-fprm").addEventListener("submit",async function(e
           body: JSON.stringify({ username, password })
         });
 
-        const data = await res.json();
-        if (res.ok &&data.token){
-            localStorage.setItem("token", data.token); // Store the token in local storage
+        const data = await res.json(); // Винаги извличай JSON независимо от res.ok
+
+        if (res.ok && data.token) {
             alert("Login successful!");
-            window.location.href = "/"; // Redirect to home page
+            window.location.href = "/"; // Пренасочване
+        } else {
+            alert(data.message || "Invalid username or password");
         }
-        else {
-            alert(data.message || "not correct username or password");
-        }
-    }catch(err){
+
+    } catch (err) {
        console.error("Error:", err);
        alert("Server error. Please try again later.");
     }
-    
 });

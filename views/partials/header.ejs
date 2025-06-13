@@ -28,4 +28,12 @@
     </div>
   </div>
 
+  <% if (user) {%>
+    <span>Welcome, <%= user.username %></span>
+    <form action = "api/auth/logout" method="POST" style ="display:inline ;">
+       <button type="submit">Logout</button>  
+    </form>
+    <% } else { %>
+  <a href="/login">Login</a>
+<% } %>
 </div>

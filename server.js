@@ -1,13 +1,15 @@
 require('dotenv').config();
 const express = require('express');
+const cookieParser = require('cookie-parser');
 const mongoose = require('mongoose');
 const cors = require('cors');
 const bodyParser = require('body-parser');
 const path = require('path');
 
+const app = express(); 
+const setUser = require('./middleware/setUser');
+app.use(setUser);
 
-
-const app = express();
 const port = process.env.PORT || 3000;
 
 // EJS темплейти
@@ -17,6 +19,8 @@ app.set('views', path.join(__dirname, 'views'));
 // за HTML форми
 app.use(bodyParser.urlencoded({ extended: true }));
 
+
+app.use(cookieParser());
 
 //acsses to folder uploads
 app.use('/uploads', express.static('uploads'));
@@ -36,6 +40,7 @@ app.use('/api/products', productRouter); // Начална страница и �
 app.use('/api/orders', orderRouter);
 app.use('/api/auth', authRouter);
 
+
 // Свързване към MongoDB
 mongoose.connect(process.env.MONGO_URL)
   .then(() => console.log("Connected to MongoDB"))
@@ -53,13 +58,19 @@ app.get('/', async (req, res) => {
 });
 
 // Админски панел с продукти
+
 const Product = require('./models/Product');
 
-app.get('/admin', async (req, res) => {
+const { authMiddleware, isAdmin } = require('./middleware/authMiddleware');
+
+app.get('/admin', authMiddleware, isAdmin ,async (req, res) => {
   const products = await Product.find().lean();
   res.render('adminPanel', { products });
 });
 
+app.get('/login', (req, res) => {
+  res.sendFile(path.join(__dirname, 'public', 'login.html'));
+});
 
 
 app.listen(port, () => {
