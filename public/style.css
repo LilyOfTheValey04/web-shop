@@ -17,6 +17,11 @@ body{
   margin-bottom: 15px;
 }
 
+.success-message {
+  color: green;
+  font-weight: bold;
+  margin-top: 10px;
+}
 
 /* Общ контейнер: черен фон, хоризонтално подреждане с flex */
 .header-container {
@@ -52,7 +57,7 @@ body{
   /* Менюто (.topnav) */
   .topnav {
 	display: flex;                  /* Подрежда линковете хоризонтално */
-	gap: 150px;                      /* Разстояние между елементите */
+	gap: 120px;                      /* Разстояние между елементите */
 	align-items: center;            /* Вертикално центриране */
 	margin-left: auto;              /* Избутва менюто вдясно (ако искаш логото да е вляво) */
   }

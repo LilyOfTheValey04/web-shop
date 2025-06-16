@@ -10,16 +10,7 @@ const ProductSchema = new mongoose.Schema({
         required: true,
         trim: true
     },
-    //refference See more for each product
-   /* refference: {
-        type: String,
-        required: true,
-        validate: {
-    validator: v => validator.isURL(v, { protocols: ['http', 'https'] }),
-    message: 'Invalid URL format'
-       
-    }
-},*/
+   
     stock: {
         type: Number,
         required: true,

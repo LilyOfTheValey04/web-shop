@@ -50,7 +50,7 @@ document.addEventListener("DOMContentLoaded", function () {
         quantity: item.quantity
       }));
 
-      if (!items.length) return alert("Няма продукти в количката");
+      if (!items.length) return alert("No products in the card");
 
       const res = await fetch("/api/orders", {
         method: "POST",
@@ -64,14 +64,14 @@ document.addEventListener("DOMContentLoaded", function () {
       });
 
       if (res.ok) {
-        alert(`${firstName}, благодарим за поръчката!`);
+        alert(`${firstName}, thank you for your order!`);
         localStorage.removeItem("cart");
         updateCartCount();
         orderForm.reset();
         window.location.href = "/";
       } else {
         const err = await res.json();
-        alert("Грешка: " + (err.error || "Неуспешна поръчка"));
+        alert("Error: " + (err.error || "Failed order"));
       }
     });
 
@@ -82,7 +82,7 @@ document.addEventListener("DOMContentLoaded", function () {
         event.preventDefault();
         localStorage.removeItem("cart");
         updateCartCount();
-        alert("Поръчката е отменена.");
+        alert("the order is cancelled");
         location.reload();
       });
     }
@@ -156,7 +156,7 @@ async function loadProduct() {
   if (!id) return;
 
   const res = await fetch(`/api/products/${id}/json`);
-  if (!res.ok) return alert(" Няма такъв продукт!");
+  if (!res.ok) return alert("This product dont exist!");
 
   const product = await res.json();
   fillForm(product);
@@ -176,15 +176,15 @@ async function loadProduct() {
         else alert ("Error with deleting");
     }
 
-
-    function submitForm(method) {
+  //създаване на нов продукт
+  /*function submitForm(method) {
   const form = document.getElementById("adminForm");
   const id = document.getElementById("productId").value;
   const formData = new FormData(form);
 
   let url = '/api/products';
   if (method === 'PUT') {
-    if (!id) return alert(" Няма ID – не може да се редактира");
+    if (!id) return alert("Missing ID – cannot update the product.");
     url = `/api/products/${id}`;
   }
 
@@ -193,20 +193,75 @@ async function loadProduct() {
     body: formData
   }).then(async (res) => {
     if (res.ok) {
-      alert(method === 'PUT' ? ' Продуктът е обновен' : ' Продуктът е създаден');
+      alert(method === 'PUT' ? 'Product updated successfully.' : 'Product created successfully.');
       location.reload();
     } else {
       const err = await res.json();
-      alert(" Грешка: " + (err.error || 'Неуспешно записване'));
+      alert("Error: " + (err.error || 'Operation failed.'));
     }
   });
-}
+}*/
 
 function clearForm() {
   document.getElementById("adminForm").reset(); // изчиства всички полета
   document.getElementById("productId").value = ""; // скритото ID поле също
   document.getElementById("imagePreview").src = ""; // маха снимката, ако има преглед
 }
+
+function submitForm(method) {
+  const form = document.getElementById("adminForm");
+  const id = document.getElementById("productId").value;
+  const formData = new FormData(form);
+  const errorBox = document.getElementById("js-error-message");
+  const successBox = document.getElementById("js-success-message");
+
+  // Clear any previous messages
+  errorBox.style.display = "none";
+  errorBox.textContent = "";
+  if (successBox) {
+    successBox.style.display = "none";
+    successBox.textContent = "";
+  }
+
+  let url = '/api/products';
+  if (method === 'PUT') {
+    if (!id) return showError(" Missing ID – cannot update product");
+    url = `/api/products/${id}`;
+  }
+
+  fetch(url, {
+    method,
+    body: formData
+  }).then(async (res) => {
+    const data = await res.json(); // Always parse the JSON response
+
+    if (res.ok) {
+      showSuccess(method === 'PUT' ? ' Product updated successfully' : ' Product created successfully');
+      form.reset();
+      setTimeout(() => location.reload(), 1500); // Reload after short delay
+    } else {
+      showError(data.error || " Failed to save product");
+    }
+  }).catch(() => {
+    showError(" Server error. Please try again later.");
+  });
+
+  // Display error message
+  function showError(message) {
+    errorBox.textContent = message;
+    errorBox.style.display = "block";
+  }
+
+  // Optionally display success message
+  function showSuccess(message) {
+    if (!successBox) return;
+    successBox.textContent = message;
+    successBox.style.display = "block";
+  }
+}
+
+
+
 
 /*document.getElementById("login-form").addEventListener("submit", async function(event){
     event.preventDefault();

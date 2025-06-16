@@ -12,6 +12,13 @@
     <a href="#about" class="active">About us</a>
     <a href="#products">Products</a>
     <a href="#contact">Contacts</a>
+<!-- Временно за тест -->
+<% if (user?.role === 'admin') { %>
+  <a href="/admin">Admin Panel</a>
+<% } %>
+
+
+
 
     <div class="profile">
       <a href="/login">
@@ -28,12 +35,4 @@
     </div>
   </div>
 
-  <% if (user) {%>
-    <span>Welcome, <%= user.username %></span>
-    <form action = "api/auth/logout" method="POST" style ="display:inline ;">
-       <button type="submit">Logout</button>  
-    </form>
-    <% } else { %>
-  <a href="/login">Login</a>
-<% } %>
 </div>

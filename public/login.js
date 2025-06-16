@@ -6,10 +6,12 @@ document.getElementById("login-form").addEventListener("submit", async function(
 
     try {
         const res = await fetch('/api/auth/login', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ username, password })
-        });
+  method: 'POST',
+  headers: { 'Content-Type': 'application/json' },
+  body: JSON.stringify({ username, password }),
+  credentials: 'include' // ⬅⬅⬅ ЗАДЪЛЖИТЕЛНО ЗА COOKIE!
+});
+
 
         const data = await res.json(); // Винаги извличай JSON независимо от res.ok
 

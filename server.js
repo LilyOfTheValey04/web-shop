@@ -7,6 +7,7 @@ const bodyParser = require('body-parser');
 const path = require('path');
 
 const app = express(); 
+app.use(cookieParser());
 const setUser = require('./middleware/setUser');
 app.use(setUser);
 
@@ -18,9 +19,6 @@ app.set('views', path.join(__dirname, 'views'));
 
 // за HTML форми
 app.use(bodyParser.urlencoded({ extended: true }));
-
-
-app.use(cookieParser());
 
 //acsses to folder uploads
 app.use('/uploads', express.static('uploads'));
@@ -47,7 +45,7 @@ mongoose.connect(process.env.MONGO_URL)
   .catch(err => console.log(err));
 
   // Начална страница с продукти
-app.get('/', async (req, res) => {
+/*app.get('/', async (req, res) => {
   try {
     const Product = require('./models/Product');
     const products = await Product.find().lean();
@@ -55,7 +53,20 @@ app.get('/', async (req, res) => {
   } catch (err) {
     res.status(500).render('error', { error: 'Грешка при зареждане на началната страница' });
   }
+});*/
+app.get('/', async (req, res) => {
+  try {
+    const Product = require('./models/Product');
+    const products = await Product.find().lean();
+
+    console.log("USER FROM res.locals:", res.locals.user); // ➕ ТУК
+
+    res.render('index', { products, isEmpty: products.length === 0 });
+  } catch (err) {
+    res.status(500).render('error', { error: 'Грешка при зареждане на началната страница' });
+  }
 });
+
 
 // Админски панел с продукти
 

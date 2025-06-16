@@ -14,28 +14,27 @@ const storage = multer.diskStorage({
   }
 });
 
-const upload = multer({ storage });
+const upload = multer({ storage }); // инстанция на multer с конфигурацията
 
-//const upload = multer({storage:storage});
+// Създава нов продукт
+router.post('/', upload.single('image'), productController.createProduct);
 
-router.post('/', upload.single('image'),productController.createProduct);
+// Масив от продукти за админ и индекс
 router.get('/', productController.getAllProducts);
 
+// Създава ревю за продукт по ID
 router.post('/:id/review', productController.addReview);
 
-// API JSON версия (използва се от JS)
-//router.get('/api/:id', productController.getProductByIdJSON);
-
-// API маршрут, който връща JSON
+// API маршрут за JS (loadProduct) за админ паела
 router.get('/:id/json', productController.getProductByIdJSON);
 
-// HTML страница
-router.get('/:id', productController.getProductByIdPage);
-
+// Актуализация на продукт
 router.put('/:id', upload.single('image'), productController.updateProduct);
 
-router.delete('/:id',  productController.deleteProduct);
+// Изтриване на продукт
+router.delete('/:id', productController.deleteProduct);
 
-
+// HTML страница за See More (admin/product page)
+router.get('/:id', productController.getProductByIdPage);
 
 module.exports = router;

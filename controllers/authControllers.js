@@ -30,9 +30,9 @@ exports.login = async(req, res) => {
       res.cookie("token", token,{
         httpOnly: true, // Защита от достъп през JS
         maxAge: 60*60*1000,
-      //  secure: true,       // Включи това ако си с HTTPS
+     
       });
-
+   // console.log(" Token sent in cookie:", token);//лог
       //Връщане на токена в отговора
     // res.json() изпраща JSON отговор на клиента
        res.json({ token, user: {username: user.username, role: user.role} });
