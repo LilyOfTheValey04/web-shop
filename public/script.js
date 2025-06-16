@@ -177,7 +177,7 @@ async function loadProduct() {
     }
 
   //създаване на нов продукт
-  /*function submitForm(method) {
+  function submitForm(method) {
   const form = document.getElementById("adminForm");
   const id = document.getElementById("productId").value;
   const formData = new FormData(form);
@@ -199,8 +199,11 @@ async function loadProduct() {
       const err = await res.json();
       alert("Error: " + (err.error || 'Operation failed.'));
     }
-  });
-}*/
+  })
+  .catch(() => {
+      alert("Server error. Please try again later.");
+    });;
+}
 
 function clearForm() {
   document.getElementById("adminForm").reset(); // изчиства всички полета
@@ -208,7 +211,7 @@ function clearForm() {
   document.getElementById("imagePreview").src = ""; // маха снимката, ако има преглед
 }
 
-function submitForm(method) {
+/*function submitForm(method) {
   const form = document.getElementById("adminForm");
   const id = document.getElementById("productId").value;
   const formData = new FormData(form);
@@ -258,9 +261,7 @@ function submitForm(method) {
     successBox.textContent = message;
     successBox.style.display = "block";
   }
-}
-
-
+}*/
 
 
 /*document.getElementById("login-form").addEventListener("submit", async function(event){
