@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  
+  <link rel="stylesheet" type="text/css" href="style.css" />
+  <link rel="icon" href="images/icon.png" type="image/png">
+  <title>Admin</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+  <style>
+    .admin-form {
+       
+  max-height: 100vh; 
+  overflow-y: auto;
+  padding: 10px;
+}
+
+</style>
+</head>
+<body>
+<div class="header-container">
+  
+        <!-- Лого (линк към началната страница) -->
+        <a href="index.html" class="logo-link">
+          <img src="images/logo3.png" alt="logo" class="logo">
+        </a>
+      
+        <!-- Навигационно меню -->
+        <div class="topnav">
+          <a href="index.html">Home</a>
+          <a class="active" href="#">About us</a>
+          <a href="#products">Products</a>
+          <a href="#contact">Contacts</a>
+
+          <div class="profile">
+            <a href="logIn.html">
+              <img src="images/user.png" alt ="User Icon" class="user-icon">
+            </a>
+          </div>
+          
+          <!-- Иконка на количката -->
+          <div class="card-container">
+            <a href="buyForm.html">
+              <img src="images/bag2.png" alt="Shopping Cart" class="cart-icon">
+              <span id="cart-count">0</span>
+            </a>
+          </div>
+        </div>
+      </div>
+    <div class="overlay" id="overlay" onclick="hideAdminForm()"></div>
+
+    <!-- Admin Panel Form -->
+	<div class="main-content"> 
+    <form class="admin-form" id="adminForm" enctype= "multipart/form-data" action="/api/products">
+        <h2>Admin Panel</h2>
+        <h3>Add Item</h3>
+    
+
+            
+            <!-- Полета за добавяне на нов елемент -->
+            <label for="nameJewelry">Name of Jewelry</label>
+            <input type="text" id="nameJewelry" name="nameJewelry"  required>
+
+            <label for="price">Price</label>
+            <input type="number" id="price" name="price" step="0.01"  required>
+
+            <label for="image">Upload Image here</label>
+            <input type="file" id="image" name="image" accept=""imahe/*""  required>
+
+            <label for="shortDescription">Short Description</label>
+            <textarea id="shortDescription" name="shortDescription" placeholder=" (max 100 characters)" required maxlength="100"></textarea>
+
+            <label for="fullDescription">Full Description</label>
+            <textarea id="fullDescription" name="fullDescription"  required></textarea>
+			
+		      	<label for="stock">Stock:</label>
+            <input type="number" id="stock" name="stock" min="0" required />
+
+            <!-- Бутон за добавяне на новия елемент -->
+           
+			<div class="button-container">
+      <button type="button" class="order-button" onclick="loadProduct()">Load by ID</button>
+      <button type="button" class="order-button" onclick="deleteProduct()">Delete</button>
+      <button type="submit"class="order-button">Save</button>
+           </div>
+
+            <!-- Секция за съществуващи елементи -->
+            <div class="item-container">
+                <h3>Existing Items</h3>
+                <div id="item-list">
+                    <!-- Items will be dynamically added here -->
+                </div>
+            </div>
+         </div>
+    </form>
+
+    <script src="script.js"></script>
+</body>
+</html>

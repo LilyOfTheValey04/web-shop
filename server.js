@@ -1,0 +1,79 @@
+require('dotenv').config();
+const express = require('express');
+const cookieParser = require('cookie-parser');
+const mongoose = require('mongoose');
+const cors = require('cors');
+const bodyParser = require('body-parser');
+const path = require('path');
+
+const app = express(); 
+const setUser = require('./middleware/setUser');
+app.use(setUser);
+
+const port = process.env.PORT || 3000;
+
+// EJS темплейти
+app.set('view engine', 'ejs');
+app.set('views', path.join(__dirname, 'views'));
+
+// за HTML форми
+app.use(bodyParser.urlencoded({ extended: true }));
+
+
+app.use(cookieParser());
+
+//acsses to folder uploads
+app.use('/uploads', express.static('uploads'));
+// Middleware
+app.use(cors());
+app.use(bodyParser.json());
+app.use(express.static(path.join(__dirname, 'public')));
+
+// Маршрути
+const productRouter = require('./routes/products');
+const orderRouter = require('./routes/orders');
+const authRouter = require('./routes/auth');
+
+
+
+app.use('/api/products', productRouter); // Начална страница и продукти
+app.use('/api/orders', orderRouter);
+app.use('/api/auth', authRouter);
+
+
+// Свързване към MongoDB
+mongoose.connect(process.env.MONGO_URL)
+  .then(() => console.log("Connected to MongoDB"))
+  .catch(err => console.log(err));
+
+  // Начална страница с продукти
+app.get('/', async (req, res) => {
+  try {
+    const Product = require('./models/Product');
+    const products = await Product.find().lean();
+    res.render('index', { products, isEmpty: products.length === 0 });
+  } catch (err) {
+    res.status(500).render('error', { error: 'Грешка при зареждане на началната страница' });
+  }
+});
+
+// Админски панел с продукти
+
+const Product = require('./models/Product');
+
+const { authMiddleware, isAdmin } = require('./middleware/authMiddleware');
+
+app.get('/admin', authMiddleware, isAdmin ,async (req, res) => {
+  const products = await Product.find().lean();
+  res.render('adminPanel', { products });
+});
+
+app.get('/login', (req, res) => {
+  res.sendFile(path.join(__dirname, 'public', 'login.html'));
+});
+
+
+app.listen(port, () => {
+  console.log(`Server is running on port ${port}`);
+});
+

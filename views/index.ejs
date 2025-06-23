@@ -1,0 +1,60 @@
+
+<!DOCTYPE html>
+<html>	
+<head>
+   
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" href="style.css"/>
+    <link rel="icon" href="images/icon.png" type="image/png">	
+    <title>Celestial jewelry</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+</head>
+<body>
+
+  <%- include('partials/header') %>
+
+<!-- Home Section -->
+
+<section class="hero-section">
+    <div class="hero-content">
+      <div class="hero-text">
+        <h2 id="hero-heading"></h2>
+        <p id="hero-paragraph"></p>
+      </div>
+      <div class="hero-image">
+        <img src="images/home1.jpg" alt="newProduct">
+      </div>
+    </div>
+  </section>
+  
+ 
+    <!-- Product Section -->
+    <main>
+        <section class="products">
+            <h2>Recommended For You</h2>
+            <div class="product-container">
+              <% products.forEach(product => { %>
+          <article class="product">
+            <img src="<%= product.image %>" alt="<%= product.name %>">
+            <h3><%= product.name %></h3>
+            <p><%= product.shortDescription %></p>
+            <p><strong>Price:</strong> <%= product.price %></p>
+            <a href="/api/products/<%= product._id %>" class="product-link">See more</a>
+
+            <!-- <a href="product4.html" class="product-link">See more</a> ! -->
+          </article>
+        <% }) %>   
+				
+            </div>
+        </section>
+    </main>
+		  
+<!-- Footer Section -->
+
+  <%- include("partials/footer") %>
+
+
+        <script src="script.js" ></script>
+
+    </body>
+</html>
